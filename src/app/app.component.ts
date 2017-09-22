@@ -27,10 +27,6 @@ export class AppComponent {
     this.hsData.add ("Squirrel");
     this.hsData.add ("Dog");
 
-    for (let iter:JIterator<string> = this.hsData.iterator(); iter.hasNext(); ) {
-      console.log (iter.next());
-    }
-
     this.tsData.add ("Cat");
     this.tsData.add ("Squirrel");
     this.tsData.add ("Dog");
@@ -65,19 +61,16 @@ export class AppComponent {
     this.tsData.add (newdata);
   }
   removeArrayListEntry(olddata:string) {
-    this.alData.removeElement(olddata);
+    this.alData.remove(olddata);
   }
   removeLinkedListEntry(olddata:string) {
-    this.llData.removeElement(olddata);
+    this.llData.remove(olddata);
   }
   removeHashSetEntry(olddata:string) {
     this.hsData.remove(olddata);
   }
   removeTreeSetEntry(olddata:string) {
-    console.log ("length before = " + this.tsData.size());
     this.tsData.remove(olddata);
-    console.log ("removed " + olddata);
-    console.log ("length after = " + this.tsData.size());
   }
 }
 

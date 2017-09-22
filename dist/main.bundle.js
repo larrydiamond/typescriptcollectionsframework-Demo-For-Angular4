@@ -79,9 +79,6 @@ var AppComponent = (function () {
         this.hsData.add("Cat");
         this.hsData.add("Squirrel");
         this.hsData.add("Dog");
-        for (var iter = this.hsData.iterator(); iter.hasNext();) {
-            console.log(iter.next());
-        }
         this.tsData.add("Cat");
         this.tsData.add("Squirrel");
         this.tsData.add("Dog");
@@ -113,19 +110,16 @@ var AppComponent = (function () {
         this.tsData.add(newdata);
     };
     AppComponent.prototype.removeArrayListEntry = function (olddata) {
-        this.alData.removeElement(olddata);
+        this.alData.remove(olddata);
     };
     AppComponent.prototype.removeLinkedListEntry = function (olddata) {
-        this.llData.removeElement(olddata);
+        this.llData.remove(olddata);
     };
     AppComponent.prototype.removeHashSetEntry = function (olddata) {
         this.hsData.remove(olddata);
     };
     AppComponent.prototype.removeTreeSetEntry = function (olddata) {
-        console.log("length before = " + this.tsData.size());
         this.tsData.remove(olddata);
-        console.log("removed " + olddata);
-        console.log("length after = " + this.tsData.size());
     };
     return AppComponent;
 }());
