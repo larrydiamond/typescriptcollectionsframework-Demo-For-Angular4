@@ -8255,24 +8255,137 @@ function __asyncValues(o) {
  * found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+var AllFieldCollectable_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/AllFieldCollectable.js");
+exports.AllFieldCollectable = AllFieldCollectable_1.AllFieldCollectable;
+var AllFieldHashable_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/AllFieldHashable.js");
+exports.AllFieldHashable = AllFieldHashable_1.AllFieldHashable;
 var ArrayList_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/ArrayList.js");
 exports.ArrayList = ArrayList_1.ArrayList;
-var CollectionUtils_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/CollectionUtils.js");
-exports.CollectionUtils = CollectionUtils_1.CollectionUtils;
-var CollectionUtils_2 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/CollectionUtils.js");
-exports.GenericCollectable = CollectionUtils_2.GenericCollectable;
-var CollectionUtils_3 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/CollectionUtils.js");
-exports.GenericHashable = CollectionUtils_3.GenericHashable;
+var Collections_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/Collections.js");
+exports.Collections = Collections_1.Collections;
 var HashMap_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/HashMap.js");
 exports.HashMap = HashMap_1.HashMap;
 var HashSet_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/HashSet.js");
 exports.HashSet = HashSet_1.HashSet;
 var LinkedList_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/LinkedList.js");
 exports.LinkedList = LinkedList_1.LinkedList;
+var PriorityQueue_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/PriorityQueue.js");
+exports.PriorityQueue = PriorityQueue_1.PriorityQueue;
 var TreeMap_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/TreeMap.js");
 exports.TreeMap = TreeMap_1.TreeMap;
 var TreeSet_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/TreeSet.js");
 exports.TreeSet = TreeSet_1.TreeSet;
+
+
+/***/ }),
+
+/***/ "../../../../typescriptcollectionsframework/dist/src/AllFieldCollectable.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @license
+ * Copyright Larry Diamond 2017 All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var AllFieldCollectable = (function () {
+    function AllFieldCollectable() {
+    }
+    AllFieldCollectable.prototype.equals = function (o1, o2) {
+        if (o1 === undefined) {
+            if (o2 === undefined) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (o1 === null) {
+            if (o2 === null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if ((o2 === null) || (o2 === undefined)) {
+            return false;
+        }
+        if (JSON.stringify(o1) === JSON.stringify(o2))
+            return true;
+        return false;
+    };
+    return AllFieldCollectable;
+}());
+exports.AllFieldCollectable = AllFieldCollectable;
+
+
+/***/ }),
+
+/***/ "../../../../typescriptcollectionsframework/dist/src/AllFieldHashable.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * @license
+ * Copyright Larry Diamond 2017 All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var AllFieldHashable = (function () {
+    function AllFieldHashable() {
+    }
+    AllFieldHashable.prototype.equals = function (o1, o2) {
+        if (o1 === undefined) {
+            if (o2 === undefined) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (o1 === null) {
+            if (o2 === null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if ((o2 === null) || (o2 === undefined)) {
+            return false;
+        }
+        if (JSON.stringify(o1) === JSON.stringify(o2))
+            return true;
+        return false;
+    };
+    ;
+    AllFieldHashable.prototype.hashCode = function (o) {
+        if (o === undefined) {
+            return 0;
+        }
+        if (o === null) {
+            return 0;
+        }
+        var tmp = JSON.stringify(o);
+        var hash = 0;
+        for (var loop = 0; loop < tmp.length; loop++) {
+            var n = tmp.charCodeAt(loop);
+            hash = ((hash * 256) + n) % 1000000000;
+        }
+        return hash;
+    };
+    ;
+    return AllFieldHashable;
+}());
+exports.AllFieldHashable = AllFieldHashable;
 
 
 /***/ }),
@@ -8511,6 +8624,20 @@ var ArrayList = (function () {
     ArrayList.prototype[Symbol.iterator] = function () {
         return new ArrayListIterator(this);
     };
+    /**
+    * Returns an ImmutableList backed by this List
+    */
+    ArrayList.prototype.immutableList = function () {
+        return this;
+    };
+    ;
+    /**
+    * Returns an ImmutableCollection backed by this Collection
+    */
+    ArrayList.prototype.immutableCollection = function () {
+        return this;
+    };
+    ;
     return ArrayList;
 }());
 exports.ArrayList = ArrayList;
@@ -8616,16 +8743,25 @@ exports.BasicMapEntry = BasicMapEntry;
 
 /***/ }),
 
-/***/ "../../../../typescriptcollectionsframework/dist/src/CollectionUtils.js":
+/***/ "../../../../typescriptcollectionsframework/dist/src/Collections.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+/**
+ * @license
+ * Copyright Larry Diamond 2017 All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
-var CollectionUtils = (function () {
-    function CollectionUtils() {
+var AllFieldCollectable_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/AllFieldCollectable.js");
+var ArrayList_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/ArrayList.js");
+var Collections = (function () {
+    function Collections() {
     }
-    CollectionUtils.getStringComparator = function () {
+    Collections.getStringComparator = function () {
         var sortString = {
             compare: function (o1, o2) {
                 if (o1 === o2)
@@ -8645,7 +8781,7 @@ var CollectionUtils = (function () {
         };
         return sortString;
     };
-    CollectionUtils.getNumberComparator = function () {
+    Collections.getNumberComparator = function () {
         var sortNumber = {
             compare: function (o1, o2) {
                 if (o1 === o2)
@@ -8665,68 +8801,7 @@ var CollectionUtils = (function () {
         };
         return sortNumber;
     };
-    return CollectionUtils;
-}());
-exports.CollectionUtils = CollectionUtils;
-var GenericCollectable = (function () {
-    function GenericCollectable() {
-    }
-    GenericCollectable.prototype.equals = function (o1, o2) {
-        if (o1 === undefined) {
-            if (o2 === undefined) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if (o1 === null) {
-            if (o2 === null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if ((o2 === null) || (o2 === undefined)) {
-            return false;
-        }
-        if (JSON.stringify(o1) === JSON.stringify(o2))
-            return true;
-        return false;
-    };
-    return GenericCollectable;
-}());
-exports.GenericCollectable = GenericCollectable;
-var GenericHashable = (function () {
-    function GenericHashable() {
-    }
-    GenericHashable.prototype.equals = function (o1, o2) {
-        if (o1 === undefined) {
-            if (o2 === undefined) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if (o1 === null) {
-            if (o2 === null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if ((o2 === null) || (o2 === undefined)) {
-            return false;
-        }
-        if (JSON.stringify(o1) === JSON.stringify(o2))
-            return true;
-        return false;
-    };
-    ;
-    GenericHashable.prototype.hashCode = function (o) {
+    Collections.prototype.getHashCodeForString = function (o) {
         if (o === undefined) {
             return 0;
         }
@@ -8741,10 +8816,60 @@ var GenericHashable = (function () {
         }
         return hash;
     };
-    ;
-    return GenericHashable;
+    Collections.prototype.getHashCodeForStrings = function (o) {
+        if (o === undefined) {
+            return 0;
+        }
+        if (o === null) {
+            return 0;
+        }
+        var tmp = 0;
+        for (var iter = o.iterator(); iter.hasNext();) {
+            var ostr = iter.next();
+            tmp = ((tmp * 256) + this.getHashCodeForString(ostr)) % 1000000000;
+        }
+        return tmp;
+    };
+    Collections.prototype.getHashCodeForNumber = function (o) {
+        if (o === undefined) {
+            return 0;
+        }
+        if (o === null) {
+            return 0;
+        }
+        var tmp = o;
+        while ((tmp < 1000000000) && (Math.floor(tmp) !== tmp)) {
+            tmp = tmp * 10;
+        }
+        return tmp;
+    };
+    Collections.prototype.stringList = function () {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        var list = new ArrayList_1.ArrayList(new AllFieldCollectable_1.AllFieldCollectable());
+        for (var loop = 0; loop < values.length; loop++) {
+            var tmp = values[loop];
+            list.add(tmp);
+        }
+        return list.immutableList();
+    };
+    Collections.prototype.numberList = function () {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        var list = new ArrayList_1.ArrayList(new AllFieldCollectable_1.AllFieldCollectable());
+        for (var loop = 0; loop < values.length; loop++) {
+            var tmp = values[loop];
+            list.add(tmp);
+        }
+        return list.immutableList();
+    };
+    return Collections;
 }());
-exports.GenericHashable = GenericHashable;
+exports.Collections = Collections;
 
 
 /***/ }),
@@ -8975,6 +9100,13 @@ var HashMap = (function () {
     HashMap.prototype.entrySet = function () {
         return new ImmutableEntrySetForHashMap(this);
     };
+    /**
+    * Returns an ImmutableMap backed by Map
+    */
+    HashMap.prototype.immutableMap = function () {
+        return this;
+    };
+    ;
     /**
      * This method is deprecated and will be removed in a future revision.
      * @deprecated
@@ -9447,6 +9579,20 @@ var HashSet = (function () {
     HashSet.prototype[Symbol.iterator] = function () {
         return new HashSetIterator(this);
     };
+    /**
+    * Returns an ImmutableCollection backed by this Collection
+    */
+    HashSet.prototype.immutableCollection = function () {
+        return this;
+    };
+    ;
+    /**
+    * Returns an ImmutableSet backed by this Set
+    */
+    HashSet.prototype.immutableSet = function () {
+        return this;
+    };
+    ;
     return HashSet;
 }());
 exports.HashSet = HashSet;
@@ -9926,6 +10072,20 @@ var LinkedList = (function () {
     LinkedList.prototype[Symbol.iterator] = function () {
         return new LinkedListIterator(this);
     };
+    /**
+    * Returns an ImmutableList backed by this List
+    */
+    LinkedList.prototype.immutableList = function () {
+        return this;
+    };
+    ;
+    /**
+    * Returns an ImmutableCollection backed by this Collection
+    */
+    LinkedList.prototype.immutableCollection = function () {
+        return this;
+    };
+    ;
     return LinkedList;
 }());
 exports.LinkedList = LinkedList;
@@ -9975,6 +10135,123 @@ var LinkedListIterator = (function () {
     return LinkedListIterator;
 }());
 exports.LinkedListIterator = LinkedListIterator;
+
+
+/***/ }),
+
+/***/ "../../../../typescriptcollectionsframework/dist/src/PriorityQueue.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+* @license
+* Copyright Larry Diamond 2017 All Rights Reserved.
+*
+* Use of this source code is governed by an MIT-style license that can be
+* found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
+*/
+Object.defineProperty(exports, "__esModule", { value: true });
+var PriorityQueue = (function () {
+    function PriorityQueue() {
+    }
+    // A very talented volunteer stepped up to write PriorityQueue.   Im preparing some files for him.   Thank you very much!
+    /**
+    * Inserts the specified element into this queue if it is possible to do so immediately without violating capacity restrictions, returning true upon success
+    * and returning false if no space is currently available or if the implementation does not permit duplicates and already contains the specified element
+    */
+    PriorityQueue.prototype.add = function (k) {
+        return undefined;
+    };
+    /**
+    * Inserts the specified element into this queue if it is possible to do so immediately without violating capacity restrictions.
+    */
+    PriorityQueue.prototype.offer = function (k) {
+        return undefined;
+    };
+    /*
+    * Retrieves and removes the head of this queue, or returns null if this queue is empty.
+    */
+    PriorityQueue.prototype.poll = function () {
+        return undefined;
+    };
+    /*
+    * Retrieves and removes the head of this queue. This method differs from poll only in that it returns undefined if this queue is empty
+    */
+    PriorityQueue.prototype.removeQueue = function () {
+        return undefined;
+    };
+    /*
+    * Retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.
+    */
+    PriorityQueue.prototype.peek = function () {
+        return undefined;
+    };
+    /*
+    * Retrieves, but does not remove, the head of this queue. This method differs from peek only in that it returns undefined if this queue is empty.
+    */
+    PriorityQueue.prototype.element = function () {
+        return undefined;
+    };
+    /**
+    * Removes all of the elements from this collection. The collection be empty after this call returns.
+    */
+    PriorityQueue.prototype.clear = function () {
+        ;
+    };
+    /**
+    * Removes the first occurrence of the specified element from this collection, if it is present. If the list does not contain the element, it is unchanged. More formally, removes the element with the lowest index i such that (o==null ? get(i)==null : o.equals(get(i))) (if such an element exists). Returns true if this list contained the specified element (or equivalently, if this list changed as a result of the call).
+    * @param {K} t element to be removed from this collection, if present
+    * @return {K} true if this collection contained the specified element
+    */
+    PriorityQueue.prototype.remove = function (k) {
+        return undefined;
+    };
+    /**
+    * Returns an ImmutableCollection backed by this Collection
+    */
+    PriorityQueue.prototype.immutableCollection = function () {
+        return this;
+    };
+    /**
+    * Returns the number of elements in this collection.
+    * @return {number} the number of elements in this collection
+    */
+    PriorityQueue.prototype.size = function () {
+        return undefined;
+    };
+    /**
+    * Returns true if this collection contains no elements.
+    * @return {boolean} true if this collection contains no elements
+    */
+    PriorityQueue.prototype.isEmpty = function () {
+        return undefined;
+    };
+    /**
+    * Returns a Java style iterator
+    * @return {JIterator<K>} the Java style iterator
+    */
+    PriorityQueue.prototype.iterator = function () {
+        return undefined;
+    };
+    /**
+     * Returns a TypeScript style iterator
+     * @return {Iterator<K>} the TypeScript style iterator
+     */
+    PriorityQueue.prototype[Symbol.iterator] = function () {
+        return undefined;
+    };
+    /**
+     * Returns true if this collection contains the specified element.
+     * @param {K} t element whose presence in this collection is to be tested
+     * @return {boolean} true if this collection contains the specified element
+     */
+    PriorityQueue.prototype.contains = function (k) {
+        return undefined;
+    };
+    return PriorityQueue;
+}());
+exports.PriorityQueue = PriorityQueue;
 
 
 /***/ }),
@@ -10725,6 +11002,13 @@ var TreeMap = (function () {
     TreeMap.prototype.entrySet = function () {
         return new ImmutableEntrySetForTreeMap(this);
     };
+    /**
+    * Returns an ImmutableMap backed by Map
+    */
+    TreeMap.prototype.immutableMap = function () {
+        return this;
+    };
+    ;
     return TreeMap;
 }());
 exports.TreeMap = TreeMap;
@@ -11119,6 +11403,20 @@ var TreeSet = (function () {
     TreeSet.prototype[Symbol.iterator] = function () {
         return new TreeSetIterator(this);
     };
+    /**
+    * Returns an ImmutableCollection backed by this Collection
+    */
+    TreeSet.prototype.immutableCollection = function () {
+        return this;
+    };
+    ;
+    /**
+    * Returns an ImmutableSet backed by this Set
+    */
+    TreeSet.prototype.immutableSet = function () {
+        return this;
+    };
+    ;
     return TreeSet;
 }());
 exports.TreeSet = TreeSet;
