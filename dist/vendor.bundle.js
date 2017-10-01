@@ -8339,6 +8339,7 @@ exports.AllFieldCollectable = AllFieldCollectable;
  * found in the LICENSE file at https://github.com/larrydiamond/typescriptcollectionsframework/LICENSE
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+var Collections_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/Collections.js");
 var AllFieldHashable = (function () {
     function AllFieldHashable() {
     }
@@ -8375,12 +8376,7 @@ var AllFieldHashable = (function () {
             return 0;
         }
         var tmp = JSON.stringify(o);
-        var hash = 0;
-        for (var loop = 0; loop < tmp.length; loop++) {
-            var n = tmp.charCodeAt(loop);
-            hash = ((hash * 256) + n) % 1000000000;
-        }
-        return hash;
+        return Collections_1.Collections.getHashCodeForString(tmp);
     };
     ;
     return AllFieldHashable;
@@ -8757,7 +8753,10 @@ exports.BasicMapEntry = BasicMapEntry;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var AllFieldCollectable_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/AllFieldCollectable.js");
+var AllFieldHashable_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/AllFieldHashable.js");
 var ArrayList_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/ArrayList.js");
+var HashMap_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/HashMap.js");
+var HashSet_1 = __webpack_require__("../../../../typescriptcollectionsframework/dist/src/HashSet.js");
 var Collections = (function () {
     function Collections() {
     }
@@ -8801,7 +8800,7 @@ var Collections = (function () {
         };
         return sortNumber;
     };
-    Collections.prototype.getHashCodeForString = function (o) {
+    Collections.getHashCodeForString = function (o) {
         if (o === undefined) {
             return 0;
         }
@@ -8816,7 +8815,7 @@ var Collections = (function () {
         }
         return hash;
     };
-    Collections.prototype.getHashCodeForStrings = function (o) {
+    Collections.getHashCodeForStrings = function (o) {
         if (o === undefined) {
             return 0;
         }
@@ -8830,7 +8829,7 @@ var Collections = (function () {
         }
         return tmp;
     };
-    Collections.prototype.getHashCodeForNumber = function (o) {
+    Collections.getHashCodeForNumber = function (o) {
         if (o === undefined) {
             return 0;
         }
@@ -8843,7 +8842,7 @@ var Collections = (function () {
         }
         return tmp;
     };
-    Collections.prototype.stringList = function () {
+    Collections.list = function () {
         var values = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             values[_i] = arguments[_i];
@@ -8855,17 +8854,17 @@ var Collections = (function () {
         }
         return list.immutableList();
     };
-    Collections.prototype.numberList = function () {
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            values[_i] = arguments[_i];
-        }
+    Collections.emptyList = function () {
         var list = new ArrayList_1.ArrayList(new AllFieldCollectable_1.AllFieldCollectable());
-        for (var loop = 0; loop < values.length; loop++) {
-            var tmp = values[loop];
-            list.add(tmp);
-        }
         return list.immutableList();
+    };
+    Collections.emptySet = function () {
+        var tmp = new HashSet_1.HashSet(new AllFieldHashable_1.AllFieldHashable());
+        return tmp.immutableSet();
+    };
+    Collections.emptyMap = function () {
+        var tmp = new HashMap_1.HashMap(new AllFieldHashable_1.AllFieldHashable());
+        return tmp.immutableMap();
     };
     return Collections;
 }());

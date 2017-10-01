@@ -31,17 +31,28 @@
 </p>
 
 <p *ngIf="active=='HashSet'">
-  HashSet<br>
+  HashSet compare on all fields:<br>
   <li *ngFor="let str of hsData"><button (click)="removeHashSetEntry(str);">{{str}}</button></li>
   <br>
   <input #hsadd type=text placeholder="add">
   <button (click)="addHashSet(hsadd.value);hsadd.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A HashSet is a Set backed by a HashMap.   There are no guarantees as to the iteration order of the set.   Set order is not guaranteed to remain constant over time.<br>
+  Click on an item to remove it from the HashSet or enter a value and click Add to add it to the HashSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
+
 </p>
 
 <p *ngIf="active=='TreeSet'">
-  TreeSet<br>
+  TreeSet compare using string Comparator<br>
   <li *ngFor="let str of tsData"><button (click)="removeTreeSetEntry(str);">{{str}}</button></li>
   <br>
   <input #tsadd type=text placeholder="add">
   <button (click)="addTreeSet(tsadd.value);tsadd.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A TreeSet is a Set backed by a TreeMap.   The order of the elements is based on the Comparator provided to it at construction.<br>
+  Click on an item to remove it from the TreeSet or enter a value and click Add to add it to the TreeSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treeset_.treeset.html">TreeSet Documentation</a><br><br>
 </p>
