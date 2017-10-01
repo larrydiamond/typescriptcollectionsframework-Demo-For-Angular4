@@ -62,6 +62,16 @@
   Click on an item to remove it from the HashSet or enter a value and click Add to add it to the HashSet.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
 
+  hsData:HashSet&lt;string> = new HashSet&lt;string>(new AllFieldHashable&lt;string>());<br>
+  this.hsData.add ("Cat");<br>
+  this.hsData.add ("Squirrel");<br>
+  this.hsData.add ("Dog");<br>
+  this.hsData.remove ("OtherElement");<br>
+  for (let iter:JIterator&lt;string> = this.hsData.iterator(); iter.hasNext(); ) &#123; <br>
+    &nbsp;&nbsp;let ostr:string = iter.next();<br>
+    &nbsp;&nbsp;console.log (ostr);<br>
+  &#125;<br>
+
 </p>
 
 <p *ngIf="active=='TreeSet'">
@@ -75,4 +85,15 @@
   A TreeSet is a Set backed by a TreeMap.   The order of the elements is based on the Comparator provided to it at construction.<br>
   Click on an item to remove it from the TreeSet or enter a value and click Add to add it to the TreeSet.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treeset_.treeset.html">TreeSet Documentation</a><br><br>
+
+  tsData:TreeSet&lt;string> = new TreeSet&lt;string>(Collections.getStringComparator());<br>
+  this.tsData.add ("Cat");<br>
+  this.tsData.add ("Squirrel");<br>
+  this.tsData.add ("Dog");<br>
+  this.tsData.remove ("OtherElement");<br>
+  for (let iter:JIterator&lt;string> = this.tsData.iterator(); iter.hasNext(); ) &#123; <br>
+    &nbsp;&nbsp;let ostr:string = iter.next();<br>
+    &nbsp;&nbsp;console.log (ostr);<br>
+  &#125;<br>
+
 </p>
