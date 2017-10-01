@@ -5,19 +5,29 @@
 <br>
 
 <p *ngIf="active=='ArrayList'">
-  ArrayList<br>
+  ArrayList compare on all fields:<br>
   <li *ngFor="let str of alData"><button (click)="removeArrayListEntry(str);">{{str}}</button></li>
   <br>
   <input #aladd type=text placeholder="add">
   <button (click)="addArrayList(aladd.value);aladd.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  An ArrayList is a List backed by a resizeable array.   Items added to an ArrayList will be added at the end of the ArrayList.<br>
+  Click on an item to remove it from the ArrayList or enter a value and click Add to add it to the ArrayList.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_arraylist_.arraylist.html">ArrayList Documentation</a><br><br>
 </p>
 
 <p *ngIf="active=='LinkedList'">
-  LinkedList<br>
+  LinkedList compare on all fields:<br>
   <li *ngFor="let str of llData"><button (click)="removeLinkedListEntry(str);">{{str}}</button></li>
   <br>
   <input #lladd type=text placeholder="add">
   <button (click)="addLinkedList(lladd.value);lladd.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A LinkedList is a List backed by a Doubly-linked list.   Items added to a LinkedList will be added at the end of the LinkedList.<br>
+  Click on an item to remove it from the LinkedList or enter a value and click Add to add it to the LinkedList.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_linkedlist_.linkedlist.html">LinkedList Documentation</a><br><br>
 </p>
 
 <p *ngIf="active=='HashSet'">
