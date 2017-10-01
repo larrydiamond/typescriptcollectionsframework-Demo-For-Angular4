@@ -25,6 +25,10 @@
     &nbsp;&nbsp;let ostr:string = iter.next();<br>
     &nbsp;&nbsp;console.log (ostr);<br>
   &#125;<br>
+  <br>
+  How to iterate over an Arraylist in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let str of alData">&lt;button (click)="removeArrayListEntry(str);">&#123;&#123;str&#125;&#125;&lt;/button>&lt;/li>
+
 </p>
 
 <p *ngIf="active=='LinkedList'">
@@ -48,6 +52,9 @@
     &nbsp;&nbsp;let ostr:string = iter.next();<br>
     &nbsp;&nbsp;console.log (ostr);<br>
   &#125;<br>
+  <br>
+  How to iterate over a LinkedList in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let str of llData">&lt;button (click)="removeLinkedListEntry(str);">&#123;&#123;str&#125;&#125;&lt;/button>&lt;/li>
 </p>
 
 <p *ngIf="active=='HashSet'">
@@ -71,7 +78,9 @@
     &nbsp;&nbsp;let ostr:string = iter.next();<br>
     &nbsp;&nbsp;console.log (ostr);<br>
   &#125;<br>
-
+  <br>
+  How to iterate over a HashSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let str of hsData">&lt;button (click)="removeHashSetEntry(str);">&#123;&#123;str&#125;&#125;&lt;/button>&lt;/li>
 </p>
 
 <p *ngIf="active=='TreeSet'">
@@ -95,5 +104,8 @@
     &nbsp;&nbsp;let ostr:string = iter.next();<br>
     &nbsp;&nbsp;console.log (ostr);<br>
   &#125;<br>
+  <br>
+  How to iterate over a TreeSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let str of tsData">&lt;button (click)="removeTreeSetEntry(str);">&#123;&#123;str&#125;&#125;&lt;/button>&lt;/li>
 
 </p>
