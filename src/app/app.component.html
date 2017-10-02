@@ -1,11 +1,13 @@
-<a href="#" (click)="ArrayList()">ArrayList</a>&nbsp;
-<a href="#" (click)="LinkedList()">LinkedList</a>&nbsp;
-<a href="#" (click)="HashSet()">HashSet</a>&nbsp;
-<a href="#" (click)="TreeSet()">TreeSet</a>&nbsp;
+<a href="#" (click)="ArrayList()">ArrayList string</a>&nbsp;
+<a href="#" (click)="LinkedList()">LinkedList string</a>&nbsp;
+<a href="#" (click)="HashSet()">HashSet string</a>&nbsp;
+<a href="#" (click)="TreeSet()">TreeSet string</a>&nbsp;
+<a href="#" (click)="ArrayListAllFields()">ArrayList PetStoreProduct compare all fields</a>&nbsp;
+<a href="#" (click)="LinkedListAllFields()">LinkedList PetStoreProduct compare all fields</a>&nbsp;
 <br>
 
 <p *ngIf="active=='ArrayList'">
-  ArrayList compare on all fields:<br>
+  ArrayList compare on a string:<br>
   <li *ngFor="let str of alData"><button (click)="removeArrayListEntry(str);">{{str}}</button></li>
   <br>
   <input #aladd type=text placeholder="add">
@@ -16,7 +18,7 @@
   Click on an item to remove it from the ArrayList or enter a value and click Add to add it to the ArrayList.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_arraylist_.arraylist.html">ArrayList Documentation</a><br><br>
 
-  alData:LinkedList&lt;string> = new ArrayList&lt;string>(new AllFieldCollectable&lt;string>());<br>
+  alData:ArrayList&lt;string> = new ArrayList&lt;string>(new AllFieldCollectable&lt;string>());<br>
   this.alData.add ("Cat");<br>
   this.alData.add ("Squirrel");<br>
   this.alData.add ("Dog");<br>
@@ -32,7 +34,7 @@
 </p>
 
 <p *ngIf="active=='LinkedList'">
-  LinkedList compare on all fields:<br>
+  LinkedList compare on a string:<br>
   <li *ngFor="let str of llData"><button (click)="removeLinkedListEntry(str);">{{str}}</button></li>
   <br>
   <input #lladd type=text placeholder="add">
@@ -58,7 +60,7 @@
 </p>
 
 <p *ngIf="active=='HashSet'">
-  HashSet compare on all fields:<br>
+  HashSet compare on a string:<br>
   <li *ngFor="let str of hsData"><button (click)="removeHashSetEntry(str);">{{str}}</button></li>
   <br>
   <input #hsadd type=text placeholder="add">
@@ -108,4 +110,92 @@
   How to iterate over a TreeSet in the HTML template for an Angular Component:<br>
   &lt;li *ngFor="let str of tsData">&lt;button (click)="removeTreeSetEntry(str);">&#123;&#123;str&#125;&#125;&lt;/button>&lt;/li>
 
+</p>
+
+
+<p *ngIf="active=='ArrayListAllFields'">
+  ArrayList compare on all fields:<br>
+  <li *ngFor="let psp of alAllData"><button (click)="removeArrayListAllEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #alalladdsku type=text placeholder="sku">
+  <input #alalladdname type=text placeholder="name">
+  <button (click)="addArrayListAll(alalladdsku.value, alalladdname.value);alalladdsku.value='';alalladdname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  An ArrayList is a List backed by a resizeable array.   Items added to an ArrayList will be added at the end of the ArrayList.<br>
+  Click on an item to remove it from the ArrayList or enter a sku and a name and click Add to add it to the ArrayList.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_arraylist_.arraylist.html">ArrayList Documentation</a><br><br>
+
+  alAllData:ArrayList&lt;PetStoreProduct> = new ArrayList&lt;PetStoreProduct>(new AllFieldCollectable&lt;PetStoreProduct>());<br>
+  this.alAllData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.alAllData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.alAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.alAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.alAllData.iterator(); iter.hasNext(); ) &#123; <br>
+    &nbsp;&nbsp;let ostr:string = iter.next();<br>
+    &nbsp;&nbsp;console.log (ostr);<br>
+  &#125;<br>
+  <br>
+  How to iterate over an Arraylist in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of alAllData">&lt;button (click)="removeArrayListAllEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+<br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+<br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
+  }<br>
+</p>
+
+
+<p *ngIf="active=='LinkedListAllFields'">
+    LinkedList compare on all fields:<br>
+    <li *ngFor="let psp of llAllData"><button (click)="removeLinkedListAllEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+    <br>
+    <input #llalladdsku type=text placeholder="sku">
+    <input #llalladdname type=text placeholder="name">
+    <button (click)="addLinkedListAll(llalladdsku.value, llalladdname.value);llalladdsku.value='';llalladdname.value=''">Add</button>
+
+    <br>  <br>  <br>  <br>
+    A LinkedList is a List backed by a Doubly-linked list.   Items added to a LinkedList will be added at the end of the LinkedList.<br>
+    Click on an item to remove it from the LinkedList or enter a value and click Add to add it to the LinkedList.<br><br>
+    <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_linkedlist_.linkedlist.html">LinkedList Documentation</a><br><br>
+
+    llAllData:LinkedList&lt;PetStoreProduct> = new LinkedList&lt;PetStoreProduct>(new AllFieldCollectable&lt;PetStoreProduct>());<br>
+    this.llAllData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+    this.llAllData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+    this.llAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+    this.llAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+    for (let iter:JIterator&lt;PetStoreProduct> = this.llAllData.iterator(); iter.hasNext(); ) &#123; <br>
+      &nbsp;&nbsp;let ostr:string = iter.next();<br>
+      &nbsp;&nbsp;console.log (ostr);<br>
+    &#125;<br>
+    <br>
+    How to iterate over an LinkedList in the HTML template for an Angular Component:<br>
+    &lt;li *ngFor="let pspa of llAllData">&lt;button (click)="removeLinkedListAllEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+    <br>  <br>
+    export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+      &nbsp;&nbsp;private sku:string;<br>
+      &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+      &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+    <br>
+      &nbsp;&nbsp;private name:string;<br>
+      &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+      &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+    <br>
+      &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+      &nbsp;&nbsp;}<br>
+    }<br>
 </p>

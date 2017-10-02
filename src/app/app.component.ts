@@ -14,6 +14,10 @@ export class AppComponent {
   hsData:HashSet<string> = new HashSet<string>(new AllFieldHashable<string>());
   tsData:TreeSet<string> = new TreeSet<string>(Collections.getStringComparator());
 
+  alAllData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
+  llAllData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
+  hsAllData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new AllFieldHashable<PetStoreProduct>());
+
   constructor () {
     this.alData.add ("Cat");
     this.alData.add ("Squirrel");
@@ -30,6 +34,22 @@ export class AppComponent {
     this.tsData.add ("Cat");
     this.tsData.add ("Squirrel");
     this.tsData.add ("Dog");
+
+    let psp1:PetStoreProduct = new PetStoreProduct("ABCDE", "Bird Seed");
+    let psp2:PetStoreProduct = new PetStoreProduct("FGHIJ", "Cat Food");
+    let psp3:PetStoreProduct = new PetStoreProduct("KLMNO", "Dog Food");
+
+    this.alAllData.add (psp1);
+    this.alAllData.add (psp2);
+    this.alAllData.add (psp3);
+
+    this.llAllData.add (psp1);
+    this.llAllData.add (psp2);
+    this.llAllData.add (psp3);
+
+    this.hsAllData.add (psp1);
+    this.hsAllData.add (psp2);
+    this.hsAllData.add (psp3);
   }
 
   ngOnInit() {
@@ -47,6 +67,12 @@ export class AppComponent {
   TreeSet() {
     this.active = "TreeSet";
   }
+  ArrayListAllFields() {
+    this.active = "ArrayListAllFields";
+  }
+  LinkedListAllFields() {
+    this.active = "LinkedListAllFields";
+  }
 
   addArrayList(newdata:string) {
     this.alData.add (newdata);
@@ -60,6 +86,14 @@ export class AppComponent {
   addTreeSet(newdata:string) {
     this.tsData.add (newdata);
   }
+  addArrayListAll(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.alAllData.add (psp);
+  }
+  addLinkedListAll(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.llAllData.add (psp);
+  }
   removeArrayListEntry(olddata:string) {
     this.alData.remove(olddata);
   }
@@ -72,20 +106,27 @@ export class AppComponent {
   removeTreeSetEntry(olddata:string) {
     this.tsData.remove(olddata);
   }
+  removeArrayListAllEntry(oldpsp:PetStoreProduct) {
+    this.alAllData.remove(oldpsp);
+  }
+  removeLinkedListAllEntry(oldpsp:PetStoreProduct) {
+    this.llAllData.remove(oldpsp);
+  }
 }
 
 export class PetStoreProduct {
   private sku:string;
-  private name:string;
-  private price:number;
-
   public getSku():string { return this.sku; }
-  public getName():string { return this.name; }
-  public getPrice():number { return this.price; }
-
   public setSku(newsku:string) { this.sku = newsku; }
+
+  private name:string;
+  public getName():string { return this.name; }
   public setName(newname:string) { this.name = newname; }
-  public setPrice(newprice:number) { this.price = newprice; }
+
+  constructor(isku:string, iname:string) {
+    this.sku = isku;
+    this.name = iname;
+  }
 }
 
 export class PetStoreProductHashable implements Hashable<PetStoreProduct> {
