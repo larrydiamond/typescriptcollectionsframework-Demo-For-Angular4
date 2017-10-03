@@ -4,6 +4,7 @@
 <a href="#" (click)="TreeSet()">TreeSet string</a>&nbsp;
 <a href="#" (click)="ArrayListAllFields()">ArrayList PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="LinkedListAllFields()">LinkedList PetStoreProduct compare all fields</a>&nbsp;
+<a href="#" (click)="HashSetAllFields()">HashSet PetStoreProduct compare all fields</a>&nbsp;
 <br>
 
 <p *ngIf="active=='ArrayList'">
@@ -67,7 +68,7 @@
   <button (click)="addHashSet(hsadd.value);hsadd.value=''">Add</button>
 
   <br>  <br>  <br>  <br>
-  A HashSet is a Set backed by a HashMap.   There are no guarantees as to the iteration order of the set.   Set order is not guaranteed to remain constant over time.<br>
+  A HashSet is a Set backed by a HashMap.   Duplicates are not permitted.   There are no guarantees as to the iteration order of the set.   Set order is not guaranteed to remain constant over time.<br>
   Click on an item to remove it from the HashSet or enter a value and click Add to add it to the HashSet.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
 
@@ -93,7 +94,7 @@
   <button (click)="addTreeSet(tsadd.value);tsadd.value=''">Add</button>
 
   <br>  <br>  <br>  <br>
-  A TreeSet is a Set backed by a TreeMap.   The order of the elements is based on the Comparator provided to it at construction.<br>
+  A TreeSet is a Set backed by a TreeMap.   Duplicates are not permitted.   The order of the elements is based on the Comparator provided to it at construction.<br>
   Click on an item to remove it from the TreeSet or enter a value and click Add to add it to the TreeSet.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treeset_.treeset.html">TreeSet Documentation</a><br><br>
 
@@ -132,8 +133,8 @@
   this.alAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
   this.alAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
   for (let iter:JIterator&lt;PetStoreProduct> = this.alAllData.iterator(); iter.hasNext(); ) &#123; <br>
-    &nbsp;&nbsp;let ostr:string = iter.next();<br>
-    &nbsp;&nbsp;console.log (ostr);<br>
+    &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+    &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
   &#125;<br>
   <br>
   How to iterate over an Arraylist in the HTML template for an Angular Component:<br>
@@ -167,7 +168,7 @@
 
     <br>  <br>  <br>  <br>
     A LinkedList is a List backed by a Doubly-linked list.   Items added to a LinkedList will be added at the end of the LinkedList.<br>
-    Click on an item to remove it from the LinkedList or enter a value and click Add to add it to the LinkedList.<br><br>
+    Click on an item to remove it from the LinkedList or enter a sku and a name and click Add to add it to the LinkedList.<br><br>
     <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_linkedlist_.linkedlist.html">LinkedList Documentation</a><br><br>
 
     llAllData:LinkedList&lt;PetStoreProduct> = new LinkedList&lt;PetStoreProduct>(new AllFieldCollectable&lt;PetStoreProduct>());<br>
@@ -176,8 +177,8 @@
     this.llAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
     this.llAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
     for (let iter:JIterator&lt;PetStoreProduct> = this.llAllData.iterator(); iter.hasNext(); ) &#123; <br>
-      &nbsp;&nbsp;let ostr:string = iter.next();<br>
-      &nbsp;&nbsp;console.log (ostr);<br>
+    &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+    &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
     &#125;<br>
     <br>
     How to iterate over an LinkedList in the HTML template for an Angular Component:<br>
@@ -198,4 +199,47 @@
       &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
       &nbsp;&nbsp;}<br>
     }<br>
+</p>
+
+<p *ngIf="active=='HashSetAllFields'">
+  HashSet compare on all fields:<br>
+  <li *ngFor="let psp of hsAllData"><button (click)="removeHashSetAllEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #hsalladdsku type=text placeholder="sku">
+  <input #hsalladdname type=text placeholder="name">
+  <button (click)="addHashSetAll(hsalladdsku.value, hsalladdname.value);hsalladdsku.value='';hsalladdname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A HashSet is a Set backed by a HashMap.   Duplicates are not permitted.   There are no guarantees as to the iteration order of the set.   Set order is not guaranteed to remain constant over time.<br>
+  Click on an item to remove it from the HashSet or enter a sku and a name and and click Add to add it to the HashSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
+
+  hsAllData:HashSet&lt;PetStoreProduct> = new HashSet&lt;PetStoreProduct>(new AllFieldHashable&lt;PetStoreProduct>());<br>
+  this.hsAllData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.hsAllData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.hsAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.hsAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.hsAllData.iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+  &#125;<br>
+  <br>
+  How to iterate over an HashSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of hsAllData">&lt;button (click)="removeHashSetAllEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+  <br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+  <br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
+  }<br>
 </p>

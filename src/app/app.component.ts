@@ -73,6 +73,9 @@ export class AppComponent {
   LinkedListAllFields() {
     this.active = "LinkedListAllFields";
   }
+  HashSetAllFields() {
+    this.active = "HashSetAllFields";
+  }
 
   addArrayList(newdata:string) {
     this.alData.add (newdata);
@@ -94,6 +97,10 @@ export class AppComponent {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.llAllData.add (psp);
   }
+  addHashSetAll(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.hsAllData.add (psp);
+  }
   removeArrayListEntry(olddata:string) {
     this.alData.remove(olddata);
   }
@@ -111,6 +118,9 @@ export class AppComponent {
   }
   removeLinkedListAllEntry(oldpsp:PetStoreProduct) {
     this.llAllData.remove(oldpsp);
+  }
+  removeHashSetAllEntry(oldpsp:PetStoreProduct) {
+    this.hsAllData.remove(oldpsp);
   }
 }
 
