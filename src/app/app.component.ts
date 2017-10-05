@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ArrayList, LinkedList, HashSet, TreeSet, Hashable, AllFieldCollectable, Collectable, AllFieldHashable, Collections, Comparator, ImmutableCollection, JIterator } from 'typescriptcollectionsframework';
+import { ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, Hashable, AllFieldCollectable, Collectable, AllFieldHashable, Collections, Comparator, ImmutableCollection, JIterator } from 'typescriptcollectionsframework';
 
 export class PetStoreProduct {
   private readonly sku:string;
@@ -36,6 +36,9 @@ export class AppComponent {
   llOneData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new PetStoreProductSkuCollectable());
   hsOneData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new PetStoreProductSkuHashable());
   tsOneData:TreeSet<PetStoreProduct> = new TreeSet<PetStoreProduct>(new PetStoreProductSkuComparator());
+
+  hsMapData:HashMap<string, string> = new HashMap<string, string>(new AllFieldHashable<string>());
+  tsMapData:TreeMap<string, string> = new TreeMap<string, string>(Collections.getStringComparator());
 
   constructor () {
     this.alData.add ("Cat");
@@ -89,6 +92,14 @@ export class AppComponent {
     this.tsOneData.add (psp1);
     this.tsOneData.add (psp2);
     this.tsOneData.add (psp3);
+
+    this.hsMapData.put (psp1.getSku(), psp1.getName());
+    this.hsMapData.put (psp2.getSku(), psp2.getName());
+    this.hsMapData.put (psp3.getSku(), psp3.getName());
+
+    this.tsMapData.put (psp1.getSku(), psp1.getName());
+    this.tsMapData.put (psp2.getSku(), psp2.getName());
+    this.tsMapData.put (psp3.getSku(), psp3.getName());
   }
 
   ngOnInit() {
@@ -129,6 +140,12 @@ export class AppComponent {
   }
   TreeSetOneField() {
     this.active = "TreeSetOneField";
+  }
+  HashMap() {
+    this.active = "HashMap";
+  }
+  TreeMap() {
+    this.active = "TreeMap";
   }
 
   addArrayList(newdata:string) {
@@ -175,6 +192,12 @@ export class AppComponent {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.tsOneData.add (psp);
   }
+  putHashMap(newsku:string, newvalue:string) {
+    this.hsMapData.put (newsku, newvalue);
+  }
+  putTreeMap(newsku:string, newvalue:string) {
+    this.tsMapData.put (newsku, newvalue);
+  }
   removeArrayListEntry(olddata:string) {
     this.alData.remove(olddata);
   }
@@ -210,6 +233,12 @@ export class AppComponent {
   }
   removeTreeSetOneEntry(oldpsp:PetStoreProduct) {
     this.tsOneData.remove(oldpsp);
+  }
+  removeHashMapEntry(oldsku:string) {
+    this.hsMapData.remove(oldsku);
+  }
+  removeTreeMapEntry(oldsku:string) {
+    this.tsMapData.remove(oldsku);
   }
 }
 

@@ -23,7 +23,19 @@
     <td><a href="#" (click)="TreeSetAllFields()">PetStoreProduct compare all fields</a>&nbsp;</td>
     <td><a href="#" (click)="TreeSetOneField()">PetStoreProduct compare one field</a>&nbsp;</td>
   </tr>
+  <tr>
+    <td>HashMap</td>
+    <td><a href="#" (click)="HashMap()">string, string</a>&nbsp;</td>
+    <td colspan=2>&nbsp; Very similar to the HashSet examples..... you'll see :) &nbsp;</td>
+  </tr>
+  <tr>
+    <td>TreeMap</td>
+    <td><a href="#" (click)="TreeMap()">string, string</a>&nbsp;</td>
+    <td colspan=2>&nbsp; Very similar to the TreeSet examples..... you'll see :) &nbsp;</td>
+  </tr>
 </table>
+<br>
+Source code for this app is located at <a href="https://github.com/larrydiamond/typescriptcollectionsframework-Demo-For-Angular4">https://github.com/larrydiamond/typescriptcollectionsframework-Demo-For-Angular4</a>
 <br>
 
 <p *ngIf="active=='ArrayList'">
@@ -580,5 +592,91 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
   &nbsp;&nbsp;&nbsp;&nbsp;    return 1;<br>
   &nbsp;&nbsp;  }<br>
+  }<br>
+</p>
+
+<p *ngIf="active=='HashMap'">
+  HashMap compare on string, string:<br>
+  <li *ngFor="let psp of hsMapData.entrySet()"><button (click)="removeHashMap(psp);">{{psp.getKey()}} - {{psp.getValue()}}</button></li>
+  <br>
+  <input #hsmapsku type=text placeholder="key">
+  <input #hsmapname type=text placeholder="value">
+  <button (click)="putHashMap(hsmapsku.value, hsmapname.value);hsmapsku.value='';hsmapname.value=''">Put</button>
+
+  <br>  <br>  <br>  <br>
+  A HashMap is a Hash implementation of the JMap interface.   Duplicate keys are not permitted.   There are no guarantees as to the iteration order of the map.   Map order is not guaranteed to remain constant over time.<br>
+  Click on an item to remove it from the HashMap or enter a key and a value and and click Put to add it to the HashMap.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashmap_.hashmap.html">HashMap Documentation</a><br><br>
+
+  hsMapData:HashMap&lt;string, string> = new HashMap&lt;string, string>(new AllFieldHashable&lt;string>());<br>
+  this.hsMapData.add ("ABCDE", "Bird Seed");<br>
+  this.hsMapData.add ("FGHIJ", "Cat Food");<br>
+  this.hsMapData.add ("KLMNO", "Dog Food");<br>
+  this.hsMapData.remove ("ZZZZZ", "Not there anymore");<br>
+  for (let iter:JIterator&lt;MapEntry&lt;string, string> = this.hsMapData.entrySet().iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:MapEntry&lt;string, string> = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getKey() - psp.getEntry());<br>
+  &#125;<br>
+  <br>
+  How to iterate over a HashMap in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let psp of hsMapData.entrySet()">&lt;button (click)="removeHashMap(psp);">&#123;&#123;psp.getKey() } } - &#123;&#123;psp.getValue() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+  <br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+  <br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
+  }<br>
+</p>
+
+<p *ngIf="active=='TreeMap'">
+  TreeMap compare on string, string:<br>
+  <li *ngFor="let psp of tsMapData.entrySet()"><button (click)="removeTreeMap(psp);">{{psp.getKey()}} - {{psp.getValue()}}</button></li>
+  <br>
+  <input #tsmapsku type=text placeholder="key">
+  <input #tsmapname type=text placeholder="value">
+  <button (click)="putTreeMap(tsmapsku.value, tsmapname.value);tsmapsku.value='';tsmapname.value=''">Put</button>
+
+  <br>  <br>  <br>  <br>
+  A TreeMap is a binary tree implementation of the JMap interface.   Duplicate keys are not permitted.   The order of the elements is based on the Comparator provided to it at construction.<br>
+  Click on an item to remove it from the TreeMap or enter a key and a value and and click Put to add it to the TreeMap.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treemap_.treemap.html">TreeMap Documentation</a><br><br>
+
+  tsMapData:TreeMap&lt;string, string> = new TreeMap&lt;string, string>(Collections.getStringComparator());<br>
+  this.tsMapData.add ("ABCDE", "Bird Seed");<br>
+  this.tsMapData.add ("FGHIJ", "Cat Food");<br>
+  this.tsMapData.add ("KLMNO", "Dog Food");<br>
+  this.tsMapData.remove ("ZZZZZ", "Not there anymore");<br>
+  for (let iter:JIterator&lt;MapEntry&lt;string, string> = this.tsMapData.entrySet().iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:MapEntry&lt;string, string> = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getKey() - psp.getEntry());<br>
+  &#125;<br>
+  <br>
+  How to iterate over a TreeMap in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let psp of tsMapData.entrySet()">&lt;button (click)="removeTreeMap(psp);">&#123;&#123;psp.getKey() } } - &#123;&#123;psp.getValue() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+  <br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+  <br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
   }<br>
 </p>
