@@ -1,15 +1,29 @@
-<a href="#" (click)="ArrayList()">ArrayList string</a>&nbsp;
-<a href="#" (click)="LinkedList()">LinkedList string</a>&nbsp;
-<a href="#" (click)="HashSet()">HashSet string</a>&nbsp;
-<a href="#" (click)="TreeSet()">TreeSet string</a>&nbsp;
-<a href="#" (click)="ArrayListAllFields()">ArrayList PetStoreProduct compare all fields</a>&nbsp;
-<a href="#" (click)="LinkedListAllFields()">LinkedList PetStoreProduct compare all fields</a>&nbsp;
-<a href="#" (click)="HashSetAllFields()">HashSet PetStoreProduct compare all fields</a>&nbsp;
-<a href="#" (click)="TreeSetAllFields()">TreeSet PetStoreProduct compare all fields</a>&nbsp;
-<a href="#" (click)="ArrayListOneField()">ArrayList PetStoreProduct compare one field</a>&nbsp;
-<a href="#" (click)="LinkedListOneField()">LinkedList PetStoreProduct compare one field</a>&nbsp;
-<a href="#" (click)="HashSetOneField()">HashSet PetStoreProduct compare one field</a>&nbsp;
-<a href="#" (click)="TreeSetOneField()">TreeSet PetStoreProduct compare one field</a>&nbsp;
+<table>
+  <tr>
+    <td>ArrayList</td>
+    <td><a href="#" (click)="ArrayList()">string</a>&nbsp;</td>
+    <td><a href="#" (click)="ArrayListAllFields()">PetStoreProduct compare all fields</a>&nbsp;</td>
+    <td><a href="#" (click)="ArrayListOneField()">PetStoreProduct compare one field</a>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>LinkedList</td>
+    <td><a href="#" (click)="LinkedList()">string</a>&nbsp;</td>
+    <td><a href="#" (click)="LinkedListAllFields()">PetStoreProduct compare all fields</a>&nbsp;</td>
+    <td><a href="#" (click)="LinkedListOneField()">PetStoreProduct compare one field</a>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>HashSet</td>
+    <td><a href="#" (click)="HashSet()">string</a>&nbsp;</td>
+    <td><a href="#" (click)="HashSetAllFields()">PetStoreProduct compare all fields</a>&nbsp;</td>
+    <td><a href="#" (click)="HashSetOneField()">PetStoreProduct compare one field</a>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>TreeSet</td>
+    <td><a href="#" (click)="TreeSet()">string</a>&nbsp;</td>
+    <td><a href="#" (click)="TreeSetAllFields()">PetStoreProduct compare all fields</a>&nbsp;</td>
+    <td><a href="#" (click)="TreeSetOneField()">PetStoreProduct compare one field</a>&nbsp;</td>
+  </tr>
+</table>
 <br>
 
 <p *ngIf="active=='ArrayList'">
