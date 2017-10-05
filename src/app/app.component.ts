@@ -1,5 +1,18 @@
 import { Component } from '@angular/core';
-import { ArrayList, LinkedList, HashSet, TreeSet, Hashable, AllFieldCollectable, AllFieldHashable, Collections, ImmutableCollection, JIterator } from 'typescriptcollectionsframework';
+import { ArrayList, LinkedList, HashSet, TreeSet, Hashable, AllFieldCollectable, Collectable, AllFieldHashable, Collections, Comparator, ImmutableCollection, JIterator } from 'typescriptcollectionsframework';
+
+export class PetStoreProduct {
+  private readonly sku:string;
+  public getSku():string { return this.sku; }
+
+  private readonly name:string;
+  public getName():string { return this.name; }
+
+  constructor(isku:string, iname:string) {
+    this.sku = isku;
+    this.name = iname;
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -17,6 +30,10 @@ export class AppComponent {
   alAllData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
   llAllData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
   hsAllData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new AllFieldHashable<PetStoreProduct>());
+
+  alOneData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new PetStoreProductSkuCollectable());
+  llOneData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new PetStoreProductSkuCollectable());
+  hsOneData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new AllFieldHashable<PetStoreProduct>());//change
 
   constructor () {
     this.alData.add ("Cat");
@@ -50,6 +67,18 @@ export class AppComponent {
     this.hsAllData.add (psp1);
     this.hsAllData.add (psp2);
     this.hsAllData.add (psp3);
+
+    this.alOneData.add (psp1);
+    this.alOneData.add (psp2);
+    this.alOneData.add (psp3);
+
+    this.llOneData.add (psp1);
+    this.llOneData.add (psp2);
+    this.llOneData.add (psp3);
+
+    this.hsOneData.add (psp1);
+    this.hsOneData.add (psp2);
+    this.hsOneData.add (psp3);
   }
 
   ngOnInit() {
@@ -76,6 +105,15 @@ export class AppComponent {
   HashSetAllFields() {
     this.active = "HashSetAllFields";
   }
+  ArrayListOneField() {
+    this.active = "ArrayListOneField";
+  }
+  LinkedListOneField() {
+    this.active = "LinkedListOneField";
+  }
+  HashSetOneField() {
+    this.active = "HashSetOneField";
+  }
 
   addArrayList(newdata:string) {
     this.alData.add (newdata);
@@ -101,6 +139,18 @@ export class AppComponent {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.hsAllData.add (psp);
   }
+  addArrayListOne(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.alOneData.add (psp);
+  }
+  addLinkedListOne(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.llOneData.add (psp);
+  }
+  addHashSetOne(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.hsOneData.add (psp);
+  }
   removeArrayListEntry(olddata:string) {
     this.alData.remove(olddata);
   }
@@ -122,22 +172,46 @@ export class AppComponent {
   removeHashSetAllEntry(oldpsp:PetStoreProduct) {
     this.hsAllData.remove(oldpsp);
   }
-}
-
-export class PetStoreProduct {
-  private sku:string;
-  public getSku():string { return this.sku; }
-  public setSku(newsku:string) { this.sku = newsku; }
-
-  private name:string;
-  public getName():string { return this.name; }
-  public setName(newname:string) { this.name = newname; }
-
-  constructor(isku:string, iname:string) {
-    this.sku = isku;
-    this.name = iname;
+  removeArrayListOneEntry(oldpsp:PetStoreProduct) {
+    this.alOneData.remove(oldpsp);
+  }
+  removeLinkedListOneEntry(oldpsp:PetStoreProduct) {
+    this.llOneData.remove(oldpsp);
+  }
+  removeHashSetOneEntry(oldpsp:PetStoreProduct) {
+    this.hsOneData.remove(oldpsp);
   }
 }
+
+export class PetStoreProductSkuCollectable implements Collectable<PetStoreProduct> {
+  equals (instance1 : PetStoreProduct, instance2 : PetStoreProduct) : boolean {
+    if (instance1 === undefined) {
+      if (instance2 === undefined) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (instance1 === null) {
+      if (instance2 === null) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if ((instance2 === null) || (instance2 === undefined)) {
+      return false;
+    }
+
+    if (instance1.getSku() === instance2.getSku()) {  // what we're really comparing here
+      return true;
+    }
+
+    return false;
+  }
+}
+
+
 
 export class PetStoreProductHashable implements Hashable<PetStoreProduct> {
   equals (o1: PetStoreProduct, o2: PetStoreProduct) : boolean {

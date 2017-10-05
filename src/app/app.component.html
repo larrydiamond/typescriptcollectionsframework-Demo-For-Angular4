@@ -5,6 +5,9 @@
 <a href="#" (click)="ArrayListAllFields()">ArrayList PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="LinkedListAllFields()">LinkedList PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="HashSetAllFields()">HashSet PetStoreProduct compare all fields</a>&nbsp;
+<a href="#" (click)="ArrayListOneField()">ArrayList PetStoreProduct compare one field</a>&nbsp;
+<a href="#" (click)="LinkedListOneField()">LinkedList PetStoreProduct compare one field</a>&nbsp;
+<a href="#" (click)="HashSetOneField()">HashSet PetStoreProduct compare one field</a>&nbsp;
 <br>
 
 <p *ngIf="active=='ArrayList'">
@@ -226,6 +229,194 @@
   <br>
   How to iterate over an HashSet in the HTML template for an Angular Component:<br>
   &lt;li *ngFor="let pspa of hsAllData">&lt;button (click)="removeHashSetAllEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+  <br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+  <br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
+  }<br>
+</p>
+
+<p *ngIf="active=='ArrayListOneField'">
+  ArrayList compare on one field:<br>
+  <li *ngFor="let psp of alOneData"><button (click)="removeArrayListOneEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #aloneaddsku type=text placeholder="sku">
+  <input #aloneaddname type=text placeholder="name">
+  <button (click)="addArrayListOne(aloneaddsku.value, aloneaddname.value);aloneaddsku.value='';aloneaddname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  An ArrayList is a List backed by a resizeable array.   Items added to an ArrayList will be added at the end of the ArrayList.<br>
+  Click on an item to remove it from the ArrayList or enter a sku and a name and click Add to add it to the ArrayList.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_arraylist_.arraylist.html">ArrayList Documentation</a><br><br>
+
+  alOneData:ArrayList&lt;PetStoreProduct> = new ArrayList&lt;PetStoreProduct>(new PetStoreProductSkuCollectable());<br>
+  this.alOneData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.alOneData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.alOneData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.alOneData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.alOneData.iterator(); iter.hasNext(); ) &#123; <br>
+    &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+    &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+  &#125;<br>
+  <br>
+  How to iterate over an Arraylist in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of alOneData">&lt;button (click)="removeArrayListOneEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+  <br>  <br>
+  export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+    &nbsp;&nbsp;private sku:string;<br>
+    &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+    &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+<br>
+    &nbsp;&nbsp;private name:string;<br>
+    &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+    &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+<br>
+    &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+    &nbsp;&nbsp;}<br>
+  }<br>
+  <br>
+  export class PetStoreProductSkuCollectable implements Collectable&lt;PetStoreProduct> &#123;<br>
+  &nbsp;&nbsp;equals (instance1 : PetStoreProduct, instance2 : PetStoreProduct) : boolean &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (instance1 === undefined) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (instance2 === undefined) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1 === null) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (instance2 === null) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if ((instance2 === null) || (instance2 === undefined)) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1.getSku() === instance2.getSku()) &#123;  // what we're really comparing here<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    return false;<br>
+  &nbsp;&nbsp;  }<br>
+  }<br>
+
+
+</p>
+
+
+<p *ngIf="active=='LinkedListOneField'">
+    LinkedList compare on one field:<br>
+    <li *ngFor="let psp of llOneData"><button (click)="removeLinkedListOneEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+    <br>
+    <input #llOneaddsku type=text placeholder="sku">
+    <input #llOneaddname type=text placeholder="name">
+    <button (click)="addLinkedListOne(llOneaddsku.value, llOneaddname.value);llOneaddsku.value='';llOneaddname.value=''">Add</button>
+
+    <br>  <br>  <br>  <br>
+    A LinkedList is a List backed by a Doubly-linked list.   Items added to a LinkedList will be added at the end of the LinkedList.<br>
+    Click on an item to remove it from the LinkedList or enter a sku and a name and click Add to add it to the LinkedList.<br><br>
+    <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_linkedlist_.linkedlist.html">LinkedList Documentation</a><br><br>
+
+    llOneData:LinkedList&lt;PetStoreProduct> = new LinkedList&lt;PetStoreProduct>(new PetStoreProductSkuCollectable());<br>
+    this.llOneData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+    this.llOneData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+    this.llOneData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+    this.llOneData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+    for (let iter:JIterator&lt;PetStoreProduct> = this.llOneData.iterator(); iter.hasNext(); ) &#123; <br>
+    &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+    &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+    &#125;<br>
+    <br>
+    How to iterate over an LinkedList in the HTML template for an Angular Component:<br>
+    &lt;li *ngFor="let pspa of llOneData">&lt;button (click)="removeLinkedListOneEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
+
+    <br>  <br>
+    export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
+      &nbsp;&nbsp;private sku:string;<br>
+      &nbsp;&nbsp;public getSku():string &#123; return this.sku; }<br>
+      &nbsp;&nbsp;public setSku(newsku:string) &#123; this.sku = newsku; }<br>
+    <br>
+      &nbsp;&nbsp;private name:string;<br>
+      &nbsp;&nbsp;public getName():string &#123; return this.name; }<br>
+      &nbsp;&nbsp;public setName(newname:string) &#123; this.name = newname; }<br>
+    <br>
+      &nbsp;&nbsp;constructor(isku:string, iname:string) &#123;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;  this.sku = isku;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
+      &nbsp;&nbsp;}<br>
+    }<br>
+    <br>
+    export class PetStoreProductSkuCollectable implements Collectable&lt;PetStoreProduct> &#123;<br>
+    &nbsp;&nbsp;equals (instance1 : PetStoreProduct, instance2 : PetStoreProduct) : boolean &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;if (instance1 === undefined) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (instance2 === undefined) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1 === null) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (instance2 === null) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return true;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return false;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    if ((instance2 === null) || (instance2 === undefined)) &#123;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return false;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1.getSku() === instance2.getSku()) &#123;  // what we're really comparing here<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return true;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;    return false;<br>
+    &nbsp;&nbsp;  }<br>
+    }<br>
+</p>
+
+<p *ngIf="active=='HashSetOneField'">
+  HashSet compare on one field:<br>
+  <li *ngFor="let psp of hsOneData"><button (click)="removeHashSetOneEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #hsOneaddsku type=text placeholder="sku">
+  <input #hsOneaddname type=text placeholder="name">
+  <button (click)="addHashSetOne(hsOneaddsku.value, hsOneaddname.value);hsOneaddsku.value='';hsOneaddname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A HashSet is a Set backed by a HashMap.   Duplicates are not permitted.   There are no guarantees as to the iteration order of the set.   Set order is not guaranteed to remain constant over time.<br>
+  Click on an item to remove it from the HashSet or enter a sku and a name and and click Add to add it to the HashSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
+
+  hsOneData:HashSet&lt;PetStoreProduct> = new HashSet&lt;PetStoreProduct>(new OneFieldHashable&lt;PetStoreProduct>());<br>
+  this.hsOneData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.hsOneData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.hsOneData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.hsOneData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.hsOneData.iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+  &#125;<br>
+  <br>
+  How to iterate over an HashSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of hsOneData">&lt;button (click)="removeHashSetOneEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li>
 
   <br>  <br>
   export class PetStoreProduct &#123; // note no methods were added to this class for the framework to support it<br>
