@@ -5,9 +5,11 @@
 <a href="#" (click)="ArrayListAllFields()">ArrayList PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="LinkedListAllFields()">LinkedList PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="HashSetAllFields()">HashSet PetStoreProduct compare all fields</a>&nbsp;
+<a href="#" (click)="TreeSetAllFields()">TreeSet PetStoreProduct compare all fields</a>&nbsp;
 <a href="#" (click)="ArrayListOneField()">ArrayList PetStoreProduct compare one field</a>&nbsp;
 <a href="#" (click)="LinkedListOneField()">LinkedList PetStoreProduct compare one field</a>&nbsp;
 <a href="#" (click)="HashSetOneField()">HashSet PetStoreProduct compare one field</a>&nbsp;
+<a href="#" (click)="TreeSetOneField()">TreeSet PetStoreProduct compare one field</a>&nbsp;
 <br>
 
 <p *ngIf="active=='ArrayList'">
@@ -247,6 +249,55 @@
   }<br>
 </p>
 
+<p *ngIf="active=='TreeSetAllFields'">
+  TreeSet compare all on fields<br>
+  <li *ngFor="let psp of tsAllData"><button (click)="removeTreeSetAllEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #tsalladdsku type=text placeholder="sku">
+  <input #tsalladdname type=text placeholder="name">
+  <button (click)="addTreeSetAll(tsalladdsku.value, tsalladdname.value);tsalladdsku.value='';tsalladdname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A TreeSet is a Set backed by a TreeMap.   Duplicates are not permitted.   The order of the elements is based on the Comparator provided to it at construction.<br>
+  Click on an item to remove it from the TreeSet or enter a value and click Add to add it to the TreeSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treeset_.treeset.html">TreeSet Documentation</a><br><br>
+
+  tsAllData:TreeSet&lt;string> = new TreeSet&lt;PetStoreProduct>(new PetStoreProductAllFieldsComparator());<br>
+  this.tsAllData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.tsAllData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.tsAllData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.tsAllData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.tsAllData.iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+  &#125;<br>
+  <br>
+  How to iterate over a TreeSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of tsAllData">&lt;button (click)="removeTreeSetAllEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li><br>
+<br>
+  export class PetStoreProductAllFieldsComparator implements Comparator&lt;PetStoreProduct> &#123;<br>
+  &nbsp;&nbsp;  compare(o1:PetStoreProduct, o2:PetStoreProduct) : number &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1 === o2)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;      if (o1 === undefined)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1 === null)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o2 === undefined)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o2 === null)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1.getSku() < o2.getSku())<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1.getSku() > o2.getSku())<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1.getName() < o2.getName())<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    return 1;<br>
+  &nbsp;&nbsp;  }<br>
+  }<br>
+</p>
+
 <p *ngIf="active=='ArrayListOneField'">
   ArrayList compare on one field:<br>
   <li *ngFor="let psp of alOneData"><button (click)="removeArrayListOneEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
@@ -471,4 +522,49 @@
   &nbsp;&nbsp;  };<br>
   }<br>
 
+</p>
+
+<p *ngIf="active=='TreeSetOneField'">
+  TreeSet compare all one field<br>
+  <li *ngFor="let psp of tsOneData"><button (click)="removeTreeSetOneEntry(psp);">{{psp.getSku()}} - {{psp.getName()}}</button></li>
+  <br>
+  <input #tsoneaddsku type=text placeholder="sku">
+  <input #tsoneaddname type=text placeholder="name">
+  <button (click)="addTreeSetOne(tsoneaddsku.value, tsoneaddname.value);tsoneaddsku.value='';tsoneaddname.value=''">Add</button>
+
+  <br>  <br>  <br>  <br>
+  A TreeSet is a Set backed by a TreeMap.   Duplicates are not permitted.   The order of the elements is based on the Comparator provided to it at construction.<br>
+  Click on an item to remove it from the TreeSet or enter a value and click Add to add it to the TreeSet.<br><br>
+  <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_treeset_.treeset.html">TreeSet Documentation</a><br><br>
+
+  tsOneData:TreeSet&lt;string> = new TreeSet&lt;PetStoreProduct>(new PetStoreProductOneFieldComparator());<br>
+  this.tsOneData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
+  this.tsOneData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
+  this.tsOneData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
+  this.tsOneData.remove (new PetStoreProduct("ZZZZZ", "Not there anymore"));<br>
+  for (let iter:JIterator&lt;PetStoreProduct> = this.tsOneData.iterator(); iter.hasNext(); ) &#123; <br>
+  &nbsp;&nbsp;let psp:PetStoreProduct = iter.next();<br>
+  &nbsp;&nbsp;console.log (psp.getSku() - psp.getName());<br>
+  &#125;<br>
+  <br>
+  How to iterate over a TreeSet in the HTML template for an Angular Component:<br>
+  &lt;li *ngFor="let pspa of tsOneData">&lt;button (click)="removeTreeSetOneEntry(pspa);">&#123;&#123;pspa.getSku() } } - &#123;&#123;pspa.getName() } } &lt;/button>&lt;/li><br>
+<br>
+  export class PetStoreProductOneFieldComparator implements Comparator&lt;PetStoreProduct> &#123;<br>
+  &nbsp;&nbsp;  compare(o1:PetStoreProduct, o2:PetStoreProduct) : number &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1 === o2)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;      if (o1 === undefined)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1 === null)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o2 === undefined)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o2 === null)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o1.getSku() < o2.getSku())<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return -1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    return 1;<br>
+  &nbsp;&nbsp;  }<br>
+  }<br>
 </p>

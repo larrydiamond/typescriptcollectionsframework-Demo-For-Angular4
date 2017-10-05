@@ -30,10 +30,12 @@ export class AppComponent {
   alAllData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
   llAllData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new AllFieldCollectable<PetStoreProduct>());
   hsAllData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new AllFieldHashable<PetStoreProduct>());
+  tsAllData:TreeSet<PetStoreProduct> = new TreeSet<PetStoreProduct>(new PetStoreProductAllFieldsComparator());
 
   alOneData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new PetStoreProductSkuCollectable());
   llOneData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new PetStoreProductSkuCollectable());
   hsOneData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new PetStoreProductSkuHashable());
+  tsOneData:TreeSet<PetStoreProduct> = new TreeSet<PetStoreProduct>(new PetStoreProductSkuComparator());
 
   constructor () {
     this.alData.add ("Cat");
@@ -68,6 +70,10 @@ export class AppComponent {
     this.hsAllData.add (psp2);
     this.hsAllData.add (psp3);
 
+    this.tsAllData.add (psp1);
+    this.tsAllData.add (psp2);
+    this.tsAllData.add (psp3);
+
     this.alOneData.add (psp1);
     this.alOneData.add (psp2);
     this.alOneData.add (psp3);
@@ -79,6 +85,10 @@ export class AppComponent {
     this.hsOneData.add (psp1);
     this.hsOneData.add (psp2);
     this.hsOneData.add (psp3);
+
+    this.tsOneData.add (psp1);
+    this.tsOneData.add (psp2);
+    this.tsOneData.add (psp3);
   }
 
   ngOnInit() {
@@ -105,6 +115,9 @@ export class AppComponent {
   HashSetAllFields() {
     this.active = "HashSetAllFields";
   }
+  TreeSetAllFields() {
+    this.active = "TreeSetAllFields";
+  }
   ArrayListOneField() {
     this.active = "ArrayListOneField";
   }
@@ -113,6 +126,9 @@ export class AppComponent {
   }
   HashSetOneField() {
     this.active = "HashSetOneField";
+  }
+  TreeSetOneField() {
+    this.active = "TreeSetOneField";
   }
 
   addArrayList(newdata:string) {
@@ -139,6 +155,10 @@ export class AppComponent {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.hsAllData.add (psp);
   }
+  addTreeSetAll(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.tsAllData.add (psp);
+  }
   addArrayListOne(newsku:string, newvalue:string) {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.alOneData.add (psp);
@@ -150,6 +170,10 @@ export class AppComponent {
   addHashSetOne(newsku:string, newvalue:string) {
     let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
     this.hsOneData.add (psp);
+  }
+  addTreeSetOne(newsku:string, newvalue:string) {
+    let psp:PetStoreProduct = new PetStoreProduct(newsku, newvalue);
+    this.tsOneData.add (psp);
   }
   removeArrayListEntry(olddata:string) {
     this.alData.remove(olddata);
@@ -172,6 +196,9 @@ export class AppComponent {
   removeHashSetAllEntry(oldpsp:PetStoreProduct) {
     this.hsAllData.remove(oldpsp);
   }
+  removeTreeSetAllEntry(oldpsp:PetStoreProduct) {
+    this.tsAllData.remove(oldpsp);
+  }
   removeArrayListOneEntry(oldpsp:PetStoreProduct) {
     this.alOneData.remove(oldpsp);
   }
@@ -180,6 +207,9 @@ export class AppComponent {
   }
   removeHashSetOneEntry(oldpsp:PetStoreProduct) {
     this.hsOneData.remove(oldpsp);
+  }
+  removeTreeSetOneEntry(oldpsp:PetStoreProduct) {
+    this.tsOneData.remove(oldpsp);
   }
 }
 
@@ -246,4 +276,44 @@ export class PetStoreProductSkuHashable implements Hashable<PetStoreProduct> {
     }
     return Collections.getHashCodeForString(o.getSku());
   };
+}
+
+export class PetStoreProductAllFieldsComparator implements Comparator<PetStoreProduct> {
+  compare(o1:PetStoreProduct, o2:PetStoreProduct) : number {
+    if (o1 === o2)
+      return 0;
+    if (o1 === undefined)
+      return -1;
+    if (o1 === null)
+      return -1;
+    if (o2 === undefined)
+      return 1;
+    if (o2 === null)
+      return 1;
+    if (o1.getSku() < o2.getSku())
+      return -1;
+    if (o1.getSku() > o2.getSku())
+      return 1;
+    if (o1.getName() < o2.getName())
+      return -1;
+    return 1;
+  }
+}
+
+export class PetStoreProductSkuComparator implements Comparator<PetStoreProduct> {
+  compare(o1:PetStoreProduct, o2:PetStoreProduct) : number {
+    if (o1 === o2)
+      return 0;
+    if (o1 === undefined)
+      return -1;
+    if (o1 === null)
+      return -1;
+    if (o2 === undefined)
+      return 1;
+    if (o2 === null)
+      return 1;
+    if (o1.getSku() < o2.getSku())
+      return -1;
+    return 1;
+  }
 }
