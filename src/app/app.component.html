@@ -405,7 +405,7 @@
   Click on an item to remove it from the HashSet or enter a sku and a name and and click Add to add it to the HashSet.<br><br>
   <a href="https://larrydiamond.github.io/typescriptcollectionsframework/typedoc/classes/_src_hashset_.hashset.html">HashSet Documentation</a><br><br>
 
-  hsOneData:HashSet&lt;PetStoreProduct> = new HashSet&lt;PetStoreProduct>(new OneFieldHashable&lt;PetStoreProduct>());<br>
+  hsOneData:HashSet&lt;PetStoreProduct> = new HashSet&lt;PetStoreProduct>(new PetStoreProductSkuHashable());<br>
   this.hsOneData.add (new PetStoreProduct("ABCDE", "Bird Seed"));<br>
   this.hsOneData.add (new PetStoreProduct("FGHIJ", "Cat Food"));<br>
   this.hsOneData.add (new PetStoreProduct("KLMNO", "Dog Food"));<br>
@@ -433,4 +433,42 @@
     &nbsp;&nbsp;&nbsp;&nbsp;  this.name = iname;<br>
     &nbsp;&nbsp;}<br>
   }<br>
+<br>
+  export class PetStoreProductSkuHashable implements Hashable&lt;PetStoreProduct> &#123;<br>
+  &nbsp;&nbsp;  equals (instance1 : PetStoreProduct, instance2 : PetStoreProduct) : boolean &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1 === undefined) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (instance2 === undefined) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1 === null) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      if (instance2 === null) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      } else &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if ((instance2 === null) || (instance2 === undefined)) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (instance1.getSku() === instance2.getSku()) &#123;  // what we're really comparing here<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return true;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    return false;<br>
+  &nbsp;&nbsp;  };<br>
+  &nbsp;&nbsp;  hashCode (o:PetStoreProduct) : number &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o === undefined) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    if (o === null) &#123;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return 0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;    return Collections.getHashCodeForString(o.getSku());<br>
+  &nbsp;&nbsp;  };<br>
+  }<br>
+
 </p>

@@ -33,7 +33,7 @@ export class AppComponent {
 
   alOneData:ArrayList<PetStoreProduct> = new ArrayList<PetStoreProduct>(new PetStoreProductSkuCollectable());
   llOneData:LinkedList<PetStoreProduct> = new LinkedList<PetStoreProduct>(new PetStoreProductSkuCollectable());
-  hsOneData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new AllFieldHashable<PetStoreProduct>());//change
+  hsOneData:HashSet<PetStoreProduct> = new HashSet<PetStoreProduct>(new PetStoreProductSkuHashable());
 
   constructor () {
     this.alData.add ("Cat");
@@ -211,30 +211,30 @@ export class PetStoreProductSkuCollectable implements Collectable<PetStoreProduc
   }
 }
 
-
-
-export class PetStoreProductHashable implements Hashable<PetStoreProduct> {
-  equals (o1: PetStoreProduct, o2: PetStoreProduct) : boolean {
-    if (o1 === undefined) {
-      if (o2 === undefined) {
+export class PetStoreProductSkuHashable implements Hashable<PetStoreProduct> {
+  equals (instance1 : PetStoreProduct, instance2 : PetStoreProduct) : boolean {
+    if (instance1 === undefined) {
+      if (instance2 === undefined) {
         return true;
       } else {
         return false;
       }
     }
-    if (o1 === null) {
-      if (o2 === null) {
+    if (instance1 === null) {
+      if (instance2 === null) {
         return true;
       } else {
         return false;
       }
     }
-    if ((o2 === null) || (o2 === undefined)) {
+    if ((instance2 === null) || (instance2 === undefined)) {
       return false;
     }
 
-    if (JSON.stringify(o1.getSku()) === JSON.stringify(o2.getSku()))
+    if (instance1.getSku() === instance2.getSku()) {  // what we're really comparing here
       return true;
+    }
+
     return false;
   };
   hashCode (o:PetStoreProduct) : number {
@@ -244,74 +244,6 @@ export class PetStoreProductHashable implements Hashable<PetStoreProduct> {
     if (o === null) {
       return 0;
     }
-    let tmp:string = JSON.stringify (o);
-    let hash: number = 0;
-    for (let loop = 0; loop < tmp.length; loop++) {
-      let n:number = tmp.charCodeAt (loop);
-      hash = ((hash * 256) + n) % 1000000000;
-    }
-    return hash;
+    return Collections.getHashCodeForString(o.getSku());
   };
-
-  getHashCodeForString (o:string) : number {
-    if (o === undefined) {
-      return 0;
-    }
-    if (o === null) {
-      return 0;
-    }
-    let tmp:string = JSON.stringify (o);
-    let hash: number = 0;
-    for (let loop = 0; loop < tmp.length; loop++) {
-      let n:number = tmp.charCodeAt (loop);
-      hash = ((hash * 256) + n) % 1000000000;
-    }
-    return hash;
-  }
-
-  getHashCodeForStringArray (o:string[]) : number {
-    if (o === undefined) {
-      return 0;
-    }
-    if (o === null) {
-      return 0;
-    }
-    let tmp:number = 0;
-    for (let loop = 0; loop < o.length; loop++) {
-      let ostr:string = o [loop];
-      tmp = ((tmp * 256) + this.getHashCodeForString (ostr)) % 1000000000;
-    }
-    return tmp;
-  }
-
-  getHashCodeForStrings (o:ImmutableCollection<string>) : number {
-    if (o === undefined) {
-      return 0;
-    }
-    if (o === null) {
-      return 0;
-    }
-    let tmp:number = 0;
-    for (let iter:JIterator<string> = o.iterator(); iter.hasNext(); ) {
-      let ostr:string = iter.next();
-      tmp = ((tmp * 256) + this.getHashCodeForString (ostr)) % 1000000000;
-    }
-    return tmp;
-  }
-
-  getHashCodeForNumber (o:number) : number {
-    if (o === undefined) {
-      return 0;
-    }
-    if (o === null) {
-      return 0;
-    }
-
-    let tmp:number = o;
-    while ((tmp < 1000000000) && (Math.floor (tmp) !== tmp)) {
-      tmp = tmp * 10;
-    }
-
-    return tmp;
-  }
 }
