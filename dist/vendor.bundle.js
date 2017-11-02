@@ -8367,7 +8367,6 @@ var AllFieldHashable = (function () {
             return true;
         return false;
     };
-    ;
     AllFieldHashable.prototype.hashCode = function (o) {
         if (o === undefined) {
             return 0;
@@ -8378,7 +8377,6 @@ var AllFieldHashable = (function () {
         var tmp = JSON.stringify(o);
         return Collections_1.Collections.getHashCodeForString(tmp);
     };
-    ;
     return AllFieldHashable;
 }());
 exports.AllFieldHashable = AllFieldHashable;
@@ -8626,14 +8624,12 @@ var ArrayList = (function () {
     ArrayList.prototype.immutableList = function () {
         return this;
     };
-    ;
     /**
     * Returns an ImmutableCollection backed by this Collection
     */
     ArrayList.prototype.immutableCollection = function () {
         return this;
     };
-    ;
     return ArrayList;
 }());
 exports.ArrayList = ArrayList;
@@ -8660,6 +8656,7 @@ var ArrayListIterator = (function () {
         this.offset = 0;
         this.arraylist = iArrayList;
     }
+    // tslint:disable-next-line:no-any
     ArrayListIterator.prototype.next = function (value) {
         if (this.offset < this.arraylist.size()) {
             return new BasicIteratorResult_1.BasicIteratorResult(false, this.arraylist.get(this.offset++));
@@ -8760,6 +8757,9 @@ var HashSet_1 = __webpack_require__("../../../../typescriptcollectionsframework/
 var Collections = (function () {
     function Collections() {
     }
+    /**
+     * Returns a Comparator that works correctly for string native objects
+     */
     Collections.getStringComparator = function () {
         var sortString = {
             compare: function (o1, o2) {
@@ -8780,6 +8780,9 @@ var Collections = (function () {
         };
         return sortString;
     };
+    /**
+     * Returns a Comparator that works correctly for number native objects
+     */
     Collections.getNumberComparator = function () {
         var sortNumber = {
             compare: function (o1, o2) {
@@ -8800,6 +8803,9 @@ var Collections = (function () {
         };
         return sortNumber;
     };
+    /**
+     * Returns a hash code good for string objects
+     */
     Collections.getHashCodeForString = function (o) {
         if (o === undefined) {
             return 0;
@@ -8815,6 +8821,9 @@ var Collections = (function () {
         }
         return hash;
     };
+    /**
+     * Returns a hash code good for Collections for objects
+     */
     Collections.getHashCodeForStrings = function (o) {
         if (o === undefined) {
             return 0;
@@ -8829,6 +8838,9 @@ var Collections = (function () {
         }
         return tmp;
     };
+    /**
+     * Returns a hash code good for number objects
+     */
     Collections.getHashCodeForNumber = function (o) {
         if (o === undefined) {
             return 0;
@@ -8842,6 +8854,9 @@ var Collections = (function () {
         }
         return tmp;
     };
+    /**
+     * Returns an ImmutableList of the entries passed in, using an AllFieldCollectable as the Collectable
+     */
     Collections.list = function () {
         var values = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -8865,6 +8880,20 @@ var Collections = (function () {
     Collections.emptyMap = function () {
         var tmp = new HashMap_1.HashMap(new AllFieldHashable_1.AllFieldHashable());
         return tmp.immutableMap();
+    };
+    /**
+     * Returns an Collectable made from the Comparator passed in
+     */
+    Collections.collectableFromComparator = function (iComp) {
+        var tmp = {
+            equals: function (o1, o2) {
+                if (0 === iComp.compare(o1, o2))
+                    return true;
+                else
+                    return false;
+            }
+        };
+        return tmp;
     };
     return Collections;
 }());
@@ -9105,7 +9134,6 @@ var HashMap = (function () {
     HashMap.prototype.immutableMap = function () {
         return this;
     };
-    ;
     /**
      * This method is deprecated and will be removed in a future revision.
      * @deprecated
@@ -9332,6 +9360,7 @@ var HashMapKeySetIterator = (function () {
         this.map = iHashMap;
         this.location = this.map.deprecatedGetFirstEntryForIterator();
     }
+    // tslint:disable-next-line:no-any
     HashMapKeySetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -9430,6 +9459,7 @@ var HashMapEntrySetIterator = (function () {
         this.map = iHashMap;
         this.location = this.map.deprecatedGetFirstEntryForIterator();
     }
+    // tslint:disable-next-line:no-any
     HashMapEntrySetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -9584,14 +9614,12 @@ var HashSet = (function () {
     HashSet.prototype.immutableCollection = function () {
         return this;
     };
-    ;
     /**
     * Returns an ImmutableSet backed by this Set
     */
     HashSet.prototype.immutableSet = function () {
         return this;
     };
-    ;
     return HashSet;
 }());
 exports.HashSet = HashSet;
@@ -9653,6 +9681,7 @@ var HashSetIterator = (function () {
         this.set = iSet;
         this.location = this.set.deprecatedGetFirstEntryForIterator();
     }
+    // tslint:disable-next-line:no-any
     HashSetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -10077,14 +10106,12 @@ var LinkedList = (function () {
     LinkedList.prototype.immutableList = function () {
         return this;
     };
-    ;
     /**
     * Returns an ImmutableCollection backed by this Collection
     */
     LinkedList.prototype.immutableCollection = function () {
         return this;
     };
-    ;
     return LinkedList;
 }());
 exports.LinkedList = LinkedList;
@@ -10121,6 +10148,7 @@ var LinkedListIterator = (function () {
     function LinkedListIterator(iList) {
         this.node = iList.getFirstNode();
     }
+    // tslint:disable-next-line:no-any
     LinkedListIterator.prototype.next = function (value) {
         if ((this.node === null) || (this.node === undefined)) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -10196,7 +10224,7 @@ var PriorityQueue = (function () {
     * Removes all of the elements from this collection. The collection be empty after this call returns.
     */
     PriorityQueue.prototype.clear = function () {
-        ;
+        return;
     };
     /**
     * Removes the first occurrence of the specified element from this collection, if it is present. If the list does not contain the element, it is unchanged. More formally, removes the element with the lowest index i such that (o==null ? get(i)==null : o.equals(get(i))) (if such an element exists). Returns true if this list contained the specified element (or equivalently, if this list changed as a result of the call).
@@ -11007,7 +11035,6 @@ var TreeMap = (function () {
     TreeMap.prototype.immutableMap = function () {
         return this;
     };
-    ;
     return TreeMap;
 }());
 exports.TreeMap = TreeMap;
@@ -11119,6 +11146,7 @@ var TreeMapKeySetIterator = (function () {
         this.treeMap = iTreeMap;
         this.location = this.treeMap.firstKey();
     }
+    // tslint:disable-next-line:no-any
     TreeMapKeySetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -11200,6 +11228,7 @@ var TreeMapEntrySetIterator = (function () {
         this.treeMap = iTreeMap;
         this.location = this.treeMap.firstEntry();
     }
+    // tslint:disable-next-line:no-any
     TreeMapEntrySetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
@@ -11408,14 +11437,12 @@ var TreeSet = (function () {
     TreeSet.prototype.immutableCollection = function () {
         return this;
     };
-    ;
     /**
     * Returns an ImmutableSet backed by this Set
     */
     TreeSet.prototype.immutableSet = function () {
         return this;
     };
-    ;
     return TreeSet;
 }());
 exports.TreeSet = TreeSet;
@@ -11472,6 +11499,7 @@ var TreeSetIterator = (function () {
         this.set = iSet;
         this.location = this.set.first();
     }
+    // tslint:disable-next-line:no-any
     TreeSetIterator.prototype.next = function (value) {
         if (this.location === null) {
             return new BasicIteratorResult_1.BasicIteratorResult(true, null);
